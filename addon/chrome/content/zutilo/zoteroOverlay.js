@@ -194,28 +194,32 @@ ZutiloChrome.zoteroOverlay = {
 
     copyCreators: function() {
         var zitems = this.getSelectedItems('regular');
-
+        var clipboardText = ''   // 新加
         if (!this.checkItemNumber(zitems, 'regular1')) {
             return false;
         }
 
-        var creatorsArray = [];
+        
         for (let zitem of zitems) {
-            var whiteSpace = ' ';
-            var lan = zitem.getField("language");
-            if (lan.indexOf("中") != -1)  //如果为中文
-              { whiteSpace = ''; //如果为中文删除空格
-                 }
-            let creators = zitem.getCreators()
+            var creatorsArray = []; // 新加
+            var whiteSpace = '';  // 新加
+            var lan = zitem.getField("language");  // 新加
+            if (lan.indexOf("en") != -1)  //如果为英文 // 新加
+                { whiteSpace = ' '; //如果为英文添加空格 // 新加
+                        } // 新加
+        let creators = zitem.getCreators()
+    
             for (let creator of creators) {
-                let creatorStr = creator.lastName + whiteSpace + creator.firstName
+                let creatorStr = creator.lastName + whiteSpace + creator.firstName  // 新加 将tab换为whiteSpace
                 if (creatorsArray.indexOf(creatorStr) == -1) {
                     creatorsArray.push(creatorStr)
                 }
+                var clipboardTextSingleItem = creatorsArray.join(', ');   
             }
+            clipboardText = clipboardText +  clipboardTextSingleItem + '\r\n'
         }
 
-        var clipboardText = creatorsArray.join(', ');
+        // var clipboardText = creatorsArray.join('\r\n');
 
         this._copyToClipboard(clipboardText)
 
