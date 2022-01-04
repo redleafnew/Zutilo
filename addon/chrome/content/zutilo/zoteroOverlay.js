@@ -201,16 +201,21 @@ ZutiloChrome.zoteroOverlay = {
 
         var creatorsArray = [];
         for (let zitem of zitems) {
+            var whiteSpace = ' ';
+            var lan = zitem.getField("language");
+            if (lan=="中文;")  //如果为中文
+              { whiteSpace = ''; //如果为中文删除空格
+                 }
             let creators = zitem.getCreators()
             for (let creator of creators) {
-                let creatorStr = creator.lastName + '\t' + creator.firstName
+                let creatorStr = creator.lastName + whiteSpace + creator.firstName
                 if (creatorsArray.indexOf(creatorStr) == -1) {
                     creatorsArray.push(creatorStr)
                 }
             }
         }
 
-        var clipboardText = creatorsArray.join('\r\n');
+        var clipboardText = creatorsArray.join(', ');
 
         this._copyToClipboard(clipboardText)
 
