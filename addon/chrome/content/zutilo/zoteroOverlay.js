@@ -203,7 +203,7 @@ ZutiloChrome.zoteroOverlay = {
         for (let zitem of zitems) {
             var whiteSpace = ' ';
             var lan = zitem.getField("language");
-            if (lan=="中文;")  //如果为中文
+            if (lan.indexOf("中") != -1)  //如果为中文
               { whiteSpace = ''; //如果为中文删除空格
                  }
             let creators = zitem.getCreators()
